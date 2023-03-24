@@ -4,14 +4,54 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <description> 单点登录父工程 </description>
+
     <groupId>com.ww.parent</groupId>
     <artifactId>sa-token-demo-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>client-1</module>
+        <module>sso-server</module>
+        <module>client-2</module>
+    </modules>
+
+    <!--父工程打包方式必须为pom-->
+    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
+    <dependencyManagement> <!--管理-->
+        <dependencies>
+            <!--依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>2.7.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
+    <!--由于每个工程需要控制jdk版本，为此我们把jdk版本控制放在父工程中-->
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
 </project>

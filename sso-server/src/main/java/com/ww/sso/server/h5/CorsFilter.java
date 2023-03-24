@@ -1,4 +1,4 @@
-package com.pj.h5;
+package com.ww.sso.server.h5;
 
 import java.io.IOException;
 

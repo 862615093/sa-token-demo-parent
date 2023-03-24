@@ -20,9 +20,9 @@ sa-token:
         
         # ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开） 
         # 是否打开模式三 
-        isHttp: true
+        # isHttp: true
         # 接口调用秘钥（用于SSO模式三的单点注销功能）
-        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        # secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
         
 spring: 
@@ -31,11 +31,11 @@ spring:
         # Redis数据库索引（默认为0）
         database: 1
         # Redis服务器地址
-        host: 127.0.0.1
+        host: 47.99.163.33
         # Redis服务器连接端口
         port: 6379
         # Redis服务器连接密码（默认为空）
-        password: 
+        password: 123456
         # 连接超时时间
         timeout: 10s
         lettuce:
@@ -49,9 +49,9 @@ spring:
                 # 连接池中的最小空闲连接
                 min-idle: 0
         
-forest: 
+#forest:
     # 关闭 forest 请求日志打印
-    log-enabled: false
+    #log-enabled: false
     
     
     

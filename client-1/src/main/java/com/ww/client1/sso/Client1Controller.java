@@ -13,7 +13,7 @@ import cn.dev33.satoken.util.SaResult;
  * @author kong
  */
 @RestController
-public class SsoClientController {
+public class Client1Controller {
 
 	// 首页 
 	@RequestMapping("/")

@@ -1,4 +1,4 @@
-package com.pj.h5;
+package com.ww.client1.h5;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;

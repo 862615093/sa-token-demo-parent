@@ -1,38 +1,61 @@
-package com.pj.h5;
+package com.ww.client2.h5;
 
-import org.noear.solon.annotation.Component;
-import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.handle.Filter;
-import org.noear.solon.core.handle.FilterChain;
+import java.io.IOException;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 /**
  * 跨域过滤器
- * @author kong 
+ * @author kong
  */
-@Component(index = -200)
+@Component
+@Order(-200)
 public class CorsFilter implements Filter {
+
 	static final String OPTIONS = "OPTIONS";
 
 	@Override
-	public void doFilter(Context ctx, FilterChain chain) throws Throwable {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
+
 		// 允许指定域访问跨域资源
-		ctx.headerSet("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		// 允许所有请求方式
-		ctx.headerSet("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
 		// 有效时间
-		ctx.headerSet("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Max-Age", "3600");
 		// 允许的header参数
-		ctx.headerSet("Access-Control-Allow-Headers", "x-requested-with,satoken");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with,satoken");
 
 		// 如果是预检请求，直接返回
-		if (OPTIONS.equals(ctx.method())) {
+		if (OPTIONS.equals(request.getMethod())) {
 			System.out.println("=======================浏览器发来了OPTIONS预检请求==========");
-			ctx.output("");
+			response.getWriter().print("");
 			return;
 		}
 
 		// System.out.println("*********************************过滤器被使用**************************");
-		chain.doFilter(ctx);
+		chain.doFilter(req, res);
 	}
+
+	@Override
+	public void init(FilterConfig filterConfig) {
+	}
+
+	@Override
+	public void destroy() {
+	}
+
 }

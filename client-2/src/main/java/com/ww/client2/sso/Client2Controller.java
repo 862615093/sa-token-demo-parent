@@ -1,25 +1,22 @@
 package com.ww.client2.sso;
 
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import cn.dev33.satoken.sso.SaSsoProcessor;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
-import org.noear.solon.annotation.Controller;
-import org.noear.solon.annotation.Mapping;
-import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.handle.Render;
 
 /**
  * Sa-Token-SSO Client端 Controller
- *
  * @author kong
  */
-@Controller
-public class SsoClientController implements Render {
+@RestController
+public class Client2Controller {
 
     // 首页
-//	@Produces(MimeType.TEXT_HTML_VALUE)
-    @Mapping("/")
+    @RequestMapping("/")
     public String index() {
         String str = "<h2>Sa-Token SSO-Client 应用端</h2>" +
                 "<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" +
@@ -34,18 +31,16 @@ public class SsoClientController implements Render {
      * 		http://{host}:{port}/sso/logout			-- Client端单点注销地址（isSlo=true时打开），接受参数：back=注销后的跳转地址
      * 		http://{host}:{port}/sso/logoutCall		-- Client端单点注销回调地址（isSlo=true时打开），此接口为框架回调，开发者无需关心
      */
-    @Mapping("/sso/*")
+    @RequestMapping("/sso/*")
     public Object ssoRequest() {
         return SaSsoProcessor.instance.clientDister();
     }
 
-    // 全局异常拦截并转换
-    @Override
-    public void render(Object data, Context ctx) throws Throwable {
-        if (data instanceof Exception) {
-            data = SaResult.error(((Exception) data).getMessage());
-        }
-
-        ctx.render(data);
+    // 全局异常拦截
+    @ExceptionHandler
+    public SaResult handlerException(Exception e) {
+        e.printStackTrace();
+        return SaResult.error(e.getMessage());
     }
+
 }
